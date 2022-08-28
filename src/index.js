@@ -11,9 +11,9 @@ export const initConnection = () => {
   const client = new Client({
     user: POSTGRES_USER || 'postgres',
     host: POSTGRES_HOST || 'localhost',
-    database: POSTGRES_DB || 'postgres',
-    password: POSTGRES_PASSWORD || 'postgres',
-    port: POSTGRES_PORT || 5556,
+    database: POSTGRES_DB || 'homework',
+    password: POSTGRES_PASSWORD || 'pliuta96',
+    port: POSTGRES_PORT || 5432,
   });
 
   return client;
@@ -23,8 +23,13 @@ export const createStructure = async () => {
   const client = initConnection();
   client.connect();
 
-  // Your code is here...
-  // Your code is here...
+  await client.query(`CREATE TABLE users (id serial primary key not null,  name varchar(30) not null, date TIMESTAMP DEFAULT CURRENT_TIMESTAMP)`);
+  await client.query(`CREATE TABLE categories (id serial primary key not null, name varchar(30) not null)`);
+  await client.query(`CREATE TABLE authors (id serial primary key not null, name varchar(30) not null)`);
+  await client.query(`CREATE TABLE books (id serial primary key not null, title varchar(30) not null, userid integer not null,  authorid integer not null, categoryid integer not null, foreign key(userid) references users(id) ON DELETE CASCADE, foreign key(authorid) references authors(id) ON DELETE CASCADE,  foreign key(categoryid) references categories(id) ON DELETE CASCADE)`);
+  await client.query(`CREATE TABLE descriptions (id serial primary key not null, description varchar(10000) not null,  bookid integer not null unique, foreign key(bookid) references books(id) ON DELETE CASCADE)`);
+  await client.query(`CREATE TABLE reviews (id serial primary key not null,  message varchar(10000) not null, userid integer not null, bookid integer not null, foreign key(userid) references users(id) ON DELETE CASCADE, foreign key(bookid) references books(id) ON DELETE CASCADE)`);
+
 
   client.end();
 };
@@ -32,6 +37,7 @@ export const createStructure = async () => {
 export const createItems = async () => {
   const client = initConnection();
   client.connect();
+
 
   // Your code is here...
 
