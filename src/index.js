@@ -38,8 +38,8 @@ export const createItems = async () => {
   const client = initConnection();
   client.connect();
 
-
-  // Your code is here...
+  await client.query(`INSERT INTO users (name) VALUES ('Nastya')`);
+  await client.query(`INSERT INTO categories (name) VALUES ('novel')`);
 
   client.end();
 };
