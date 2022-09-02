@@ -40,6 +40,10 @@ export const createItems = async () => {
 
   await client.query(`INSERT INTO users (name) VALUES ('Nastya')`);
   await client.query(`INSERT INTO categories (name) VALUES ('novel')`);
+  await client.query(`INSERT INTO authors (name) VALUES ('Mikhail Bulgakov')`);
+  await client.query(`INSERT INTO books (title, userid, authorid, categoryid) VALUES ('The Master and Margarita', 1, 1, 1)`);
+  await client.query(`INSERT INTO descriptions (description, bookid) VALUES ('The Master and Margarita is a novel by Soviet writer Mikhail Bulgakov, written in the Soviet Union between 1928 and 1940 during Stalins regime. A censored version was published in Moscow magazine in 1966–1967, after the writers death. The manuscript was not published as a book until 1967, in Paris. A samizdat version circulated that included parts cut out by official censors, and these were incorporated in a 1969 version published in Frankfurt. The novel has since been published in several languages and editions.', 1)`);
+  await client.query(`INSERT INTO reviews (message, userid, bookid) VALUES ('It is my favourite book', 1, 1)`);
 
   client.end();
 };
